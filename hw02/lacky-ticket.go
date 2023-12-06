@@ -1,6 +1,6 @@
 package main
 
-func lackyTicket(halfNumberCount int) int {
+func lackyTicketCount(halfNumberCount int) int {
 	wayvs := make(map[int]int, 9*halfNumberCount)
 	lackyStep(0, 0, halfNumberCount, wayvs)
 	count := 0
