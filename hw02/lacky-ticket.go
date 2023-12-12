@@ -2,24 +2,24 @@ package main
 
 func luckyTicketCount(halfNumberCount int) int {
 	maxSum := 9 * halfNumberCount
-	dpCurrent := make([]int, maxSum+1)
-	dpPrevious := make([]int, maxSum+1)
-	dpPrevious[0] = 1
+	stepCurrent := make([]int, maxSum+1)
+	stepPrevious := make([]int, maxSum+1)
+	stepPrevious[0] = 1
 
 	for i := 1; i <= halfNumberCount; i++ {
 		for j := 0; j <= maxSum; j++ {
-			dpCurrent[j] = 0
+			stepCurrent[j] = 0
 			for k := 0; k <= 9; k++ {
 				if j-k >= 0 {
-					dpCurrent[j] += dpPrevious[j-k]
+					stepCurrent[j] += stepPrevious[j-k]
 				}
 			}
 		}
-		dpPrevious, dpCurrent = dpCurrent, dpPrevious
+		stepPrevious, stepCurrent = stepCurrent, stepPrevious
 	}
 
 	count := 0
-	for _, v := range dpPrevious {
+	for _, v := range stepPrevious {
 		count += v * v
 	}
 	return count
