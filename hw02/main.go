@@ -15,7 +15,7 @@ func main() {
 	for name, tc := range tests {
 		go func(name string, t *TestCase) {
 			defer wg.Done()
-			result := lackyTicketCount(t.In)
+			result := luckyTicketCount(t.In)
 			fmt.Println(name, result == t.Out)
 		}(name, tc)
 	}

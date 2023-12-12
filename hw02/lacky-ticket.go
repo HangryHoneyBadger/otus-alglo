@@ -1,21 +1,26 @@
 package main
 
-func lackyTicketCount(halfNumberCount int) int {
-	wayvs := make(map[int]int, 9*halfNumberCount)
-	lackyStep(0, 0, halfNumberCount, wayvs)
+func luckyTicketCount(halfNumberCount int) int {
+	maxSum := 9 * halfNumberCount
+	dpCurrent := make([]int, maxSum+1)
+	dpPrevious := make([]int, maxSum+1)
+	dpPrevious[0] = 1
+
+	for i := 1; i <= halfNumberCount; i++ {
+		for j := 0; j <= maxSum; j++ {
+			dpCurrent[j] = 0
+			for k := 0; k <= 9; k++ {
+				if j-k >= 0 {
+					dpCurrent[j] += dpPrevious[j-k]
+				}
+			}
+		}
+		dpPrevious, dpCurrent = dpCurrent, dpPrevious
+	}
+
 	count := 0
-	for _, v := range wayvs {
+	for _, v := range dpPrevious {
 		count += v * v
 	}
 	return count
-}
-
-func lackyStep(step, sum, halfNumberCount int, value map[int]int) {
-	for i := 0; i < 10; i++ {
-		if step+1 == halfNumberCount {
-			value[sum+i]++
-		} else {
-			lackyStep(step+1, sum+i, halfNumberCount, value)
-		}
-	}
 }
